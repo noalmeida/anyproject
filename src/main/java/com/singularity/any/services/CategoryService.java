@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.singularity.any.domain.Category;
 import com.singularity.any.repositories.CategoryRepository;
+import com.singularity.any.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class CategoryService {
@@ -16,7 +17,8 @@ public class CategoryService {
 	
 	public Category buscar(Integer id) {
 		Optional<Category> obg =  repo.findById(id);
-		return obg.orElse(null);
+		return obg.orElseThrow(() -> new ObjectNotFoundException(
+				"Object not found, ID: " + id + "tipo: " + Category.class.getName() ));
 		
 	}
 
